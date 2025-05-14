@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Command Injection Demo</title>
+</head>
+<body>
+    <h1>Command Injection Demo</h1>
+
+    <div class="container">
+        <div class="vulnerable">
+            <h2>Vulnerable File Upload</h2>
+            <form method="POST" action="/vulner-login" enctype="multipart/form-data">
+                <input type="file" name="file" required>
+                <button type="submit">Upload</button>
+            </form>
+
+            {% if vulner_status %}
+            <div class="status {% if 'Success' in vulner_status %}success{% else %}error{% endif %}">
+                {{ vulner_status }}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="secure">
+            <h2>Secure File Upload</h2>
+            <form method="POST" action="/secure-login" enctype="multipart/form-data">
+                <input type="file" name="file" required>
+                <button type="submit">Upload</button>
+            </form>
+
+            {% if secure_status %}
+            <div class="status {% if 'Success' in secure_status %}success{% else %}error{% endif %}">
+                {{ secure_status }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
