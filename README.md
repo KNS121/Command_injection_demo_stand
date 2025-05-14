@@ -8,4 +8,4 @@ Vulner Upload files: НЕбезопасная загрузка файлов на
 
 Security Upload files: Запрещаем shell, фильтрация + экран
 
-Vulner && Security <ping>: по аналогичной схеме :D
+Vulner && Security ping: по аналогичной схеме :D
