@@ -22,7 +22,7 @@ async def main_page(request: Request):
     })
 
 
-@app.post("/vulner-login", response_class=HTMLResponse)
+@app.post("/vulner-upload", response_class=HTMLResponse)
 async def vulnerable_upload(request: Request, file: UploadFile = File(...)):
     status = ""
     try:
@@ -53,7 +53,7 @@ async def vulnerable_upload(request: Request, file: UploadFile = File(...)):
     })
 
 
-@app.post("/secure-login", response_class=HTMLResponse)
+@app.post("/secure-upload", response_class=HTMLResponse)
 async def secure_upload(request: Request, file: UploadFile = File(...)):
     status = ""
     try:
