@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, UploadFile, File
+from fastapi import FastAPI, Request, UploadFile, File, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 import subprocess
@@ -84,3 +84,42 @@ async def secure_upload(request: Request, file: UploadFile = File(...)):
         "vulner_status": "",
         "secure_status": status
     })
+
+
+@app.post("/ping/unsafe")
+async def unsafe_ping(host: str = Form(...)):
+    try:
+        # Vuln
+        cmd = f"ping -c 4 {host}"
+        result = subprocess.run(
+            cmd,
+            shell=True,
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
+        return {"result": result.stdout}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.post("/ping/safe")
+async def safe_ping(host: str = Form(...)):
+    try:
+        # Validation
+        if not re.match(r"^[\d\.]+$", host):
+            raise ValueError("Invalid IP address format")
+
+        # Security
+        sanitized_host = shlex.quote(host)
+        result = subprocess.run(
+            ["ping", "-c", "4", sanitized_host],
+            shell=False,
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
+        return {"result": result.stdout}
+    except Exception as e:
+        return {"error": str(e)}
+
